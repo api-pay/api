@@ -2,10 +2,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>我的 GitHub Pages 网站</title>
+    <meta charset="UTF-8">
+    <title>跳转中...</title>
+    <!-- 可选：使用 meta 刷新（简单但不够灵活） -->
+    <!-- <meta http-equiv="refresh" content="1;url=https://www.baidu.com"> -->
+    
+    <script>
+        // 推荐：使用 JavaScript 控制跳转（更可靠）
+        setTimeout(function() {
+            window.location.href = "https://www.baidu.com";
+        }, 1000); // 1000 毫秒 = 1 秒
+    </script>
 </head>
 <body>
-    <h1>你好！这是我的静态网站</h1>
-    <p>GitHub Pages 不支持 PHP，只支持静态内容。</p>
+    <h1>页面即将跳转...</h1>
+    <p>正在跳转到百度，请稍候（1秒后自动跳转）。</p>
+    <p><a href="https://www.baidu.com">如果未跳转，请点击这里</a></p>
 </body>
 </html>
