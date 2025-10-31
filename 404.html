@@ -1,7 +1,31 @@
+<!DOCTYPE html>
 <html>
-<head><title>404 Not Found</title></head>
-<body>
-<center><h1>404 Not Found</h1></center>
-<hr><center>nginx</center>
-</body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>跳转中</title>
+  <style>
+    body {
+      margin: 0; height: 100vh;
+      display: flex; justify-content: center; align-items: center;
+      font-family: system-ui, sans-serif; font-size: 18px;
+    }
+  </style>
+  <script>
+    (function() {
+      var path = window.location.pathname;
+      // 假设格式: /https://www.baidu.com
+      if (path.startsWith('/http')) {
+        var url = path.substring(1); // 去掉开头的 /
+        try { url = decodeURIComponent(url); } catch(e) {}
+        if (/^(https?:\/\/)/.test(url)) {
+          window.location.href = url;
+          return;
+        }
+      }
+      document.body.textContent = '无效链接';
+    })();
+  </script>
+</head>
+<body>跳转中...</body>
 </html>
