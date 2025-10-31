@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>跳转中</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>跳转中...</title>
   <style>
     body {
       margin: 0;
@@ -11,45 +11,46 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: system-ui, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       font-size: 18px;
       color: #333;
+      background: #fff;
     }
   </style>
-  <script>
-    (function() {
-      var path = window.location.pathname;
-      console.log("当前路径:", path);
-
-      if (path.startsWith('/api/')) {
-        var target = path.substring(6);
-        console.log("原始目标:", target);
-
-        try {
-          target = decodeURIComponent(target);
-          console.log("解码后目标:", target);
-        } catch (e) {
-          console.error("解码失败:", e);
-        }
-
-        if (target && /^(https?:\/\/)/.test(target)) {
-          console.log("准备跳转到:", target);
-          alert("即将跳转到: " + target); // 用于确认 JS 执行
-          window.location.href = target;
-          return;
-        } else {
-          console.warn("目标地址无效:", target);
-          document.body.textContent = '无效链接';
-          document.body.style.color = '#f5222d';
-        }
-      } else {
-        document.body.textContent = '无效链接';
-        document.body.style.color = '#f5222d';
-      }
-    })();
-  </script>
 </head>
 <body>
   跳转中...
+  <script>
+    // 等待 DOM 加载完成（虽然 body 已存在，但更安全）
+    document.addEventListener('DOMContentLoaded', function () {
+      const path = window.location.pathname;
+
+      // 必须以 /api/ 开头（因为你的仓库叫 api）
+      if (path.startsWith('/api/')) {
+        // 正确截取：'/api/'.length = 5
+        let target = path.substring(5);
+
+        // 尝试解码（支持编码后的 URL，如 %3A）
+        try {
+          target = decodeURIComponent(target);
+        } catch (e) {
+          // 解码失败就用原始值（比如含非法字符）
+        }
+
+        // 严格校验：必须是 http:// 或 https:// 开头
+        if (target && /^(https?:\/\/)/i.test(target)) {
+          // 安全跳转（避免历史记录堆积）
+          setTimeout(() => {
+            window.location.replace(target);
+          }, 100);
+          return;
+        }
+      }
+
+      // 如果不是有效跳转链接，显示错误
+      document.body.textContent = '无效的跳转链接';
+      document.body.style.color = '#ff4d4f';
+    });
+  </script>
 </body>
 </html>
