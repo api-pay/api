@@ -1,20 +1,46 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>1跳转中...</title>
-    <!-- 可选：使用 meta 刷新（简单但不够灵活） -->
-    <!-- <meta http-equiv="refresh" content="1;url=https://www.baidu.com"> -->
-    
-    <script>
-        // 推荐：使用 JavaScript 控制跳转（更可靠）
-       window.location.href = "https://www.baidu.com";
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>跳转中</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fff;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+  <script>
+    (function() {
+      var path = window.location.pathname;
+      var prefix = '/api/index.html/';
+      if (path.startsWith(prefix)) {
+        var target = path.substring(prefix.length);
+        try {
+          target = decodeURIComponent(target);
+        } catch (e) {}
+
+        if (target && /^(https?:\/\/)/.test(target)) {
+          // 立即跳转
+          window.location.href = target;
+          return;
+        }
+      }
+      // 跳转失败：显示错误
+      document.body.textContent = '无效链接';
+      document.body.style.color = '#f5222d';
+    })();
+  </script>
 </head>
 <body>
-    <h1>页面即将跳转...</h1>
-    <p>正在跳转到百度，请稍候（1秒后自动跳转）。</p>
-    <p><a href="https://www.baidu.com">如果未跳转，请点击这里</a></p>
+  跳转中...
 </body>
 </html>
