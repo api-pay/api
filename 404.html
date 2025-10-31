@@ -6,26 +6,50 @@
   <title>跳转中</title>
   <style>
     body {
-      margin: 0; height: 100vh;
-      display: flex; justify-content: center; align-items: center;
-      font-family: system-ui, sans-serif; font-size: 18px;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: system-ui, sans-serif;
+      font-size: 18px;
+      color: #333;
     }
   </style>
   <script>
     (function() {
       var path = window.location.pathname;
-      // 假设格式: /https://www.baidu.com
-      if (path.startsWith('/http')) {
-        var url = path.substring(1); // 去掉开头的 /
-        try { url = decodeURIComponent(url); } catch(e) {}
-        if (/^(https?:\/\/)/.test(url)) {
-          window.location.href = url;
-          return;
+      console.log("当前路径:", path);
+
+      if (path.startsWith('/api/')) {
+        var target = path.substring(6);
+        console.log("原始目标:", target);
+
+        try {
+          target = decodeURIComponent(target);
+          console.log("解码后目标:", target);
+        } catch (e) {
+          console.error("解码失败:", e);
         }
+
+        if (target && /^(https?:\/\/)/.test(target)) {
+          console.log("准备跳转到:", target);
+          alert("即将跳转到: " + target); // 用于确认 JS 执行
+          window.location.href = target;
+          return;
+        } else {
+          console.warn("目标地址无效:", target);
+          document.body.textContent = '无效链接';
+          document.body.style.color = '#f5222d';
+        }
+      } else {
+        document.body.textContent = '无效链接';
+        document.body.style.color = '#f5222d';
       }
-      document.body.textContent = '无效链接';
     })();
   </script>
 </head>
-<body>跳转中...</body>
+<body>
+  跳转中...
+</body>
 </html>
